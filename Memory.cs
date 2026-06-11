@@ -1,11 +1,12 @@
+using System.IO;
 namespace Chip8Emulator
 {
     public class Memory
     {
-        private byte[] buffer = new byte[4096];
+        public byte[] buffer = new byte[4096];
+        private string filePath;
         
-        public Memory()
-        {
+        public Memory(string _filePath) {
             byte[] font = new byte[]
         {
             0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
@@ -26,6 +27,21 @@ namespace Chip8Emulator
             0xF0, 0x80, 0xF0, 0x80, 0x80  // F
         };
             Array.Copy(font, 0, buffer, 0x50, font.Length);
+            filePath = _filePath;
+            LoadRom();
+
+
         }
+
+        private void LoadRom() {
+            byte[] romBytes = File.ReadAllBytes(filePath);
+            
+            // Check if ROM fits into memory
+            if (romBytes.Length + 512 > 4096) {
+                throw new Exception("ROM is too large to fit in memory.");
+            }
+            
+            Array.Copy(romBytes, 0, buffer, 512, romBytes.Length);
+}
     }
 }
