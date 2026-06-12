@@ -46,52 +46,110 @@ namespace Chip8Emulator
             switch(type)
             {
                 case 0x0:
-                break ;
+                    switch (N)
+                    {
+                        case 0x0:
+                            Array.Clear(display.display, 0, display.display.Length);
+                            break;
+
+                    }
+                    break;
 
                 case 0x1:
-                break;
+                    PC = NNN;
+                    break;
 
                 case 0x2:
-                break;
+                    break;
 
                 case 0x3:
-                break;
+                    break;
 
                 case 0x4:
-                break;
+                    break;
 
                 case 0x5:
-                break;
+                    break;
 
                 case 0x6:
-                break;
+                    registers[X] = NN;
+                    break;
 
                 case 0x7:
-                break;
+                    registers[X] += NN;
+                    break;
 
                 case 0x8:
-                break;
+                    switch (N)
+                    {
+                        case 0x0:
+                            registers[X] = registers[Y];
+                            break;
+                        case 0x1:
+                            registers[X] = (byte) (registers[X] | registers[Y]);
+                            break;
+                        case 0x2:
+                            registers[X] = (byte) (registers[X] & registers[Y]);
+                            break;
+                        case 0x3:
+                            registers[X] = (byte) (registers[X] ^ registers[Y]);
+                            break;
+                        case 0x4:
+                            registers[X] = (byte) (registers[X] + registers[Y]);
+                            break;
+                        case 0x5:
+                            if (registers[X] >= registers[Y])
+                                {
+                                    registers[15] = 1;
+                                }
+
+                            else
+                                {
+                                    registers[15] = 0;
+                                }
+                             registers[X] = (byte) (registers[X] - registers[Y]);
+                            break;
+                        case 0x6:
+                            break;
+                        case 0x7:
+                            if (registers[Y] >= registers[X])
+                                {
+                                    registers[15] = 1;
+                                }
+
+                            else
+                                {
+                                    registers[15] = 0;
+                                }
+                             registers[X] = (byte) (registers[Y] - registers[X]);
+                            break;
+                        case 0xE:
+                            break;
+                    }
+                    break;
 
                 case 0x9:
-                break;
+                    break;
 
                 case 0xA:
-                break;
+                    I = NNN;
+                    break;
 
                 case 0xB:
-                break;
+                    break;
 
                 case 0xC:
-                break;
+                    break;
 
                 case 0xD:
-                break;
+
+                    break;
 
                 case 0xE:
-                break;
+                    break;
 
                 case 0xF:
-                break;
+                    break;
 
 
             }
