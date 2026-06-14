@@ -63,12 +63,24 @@ namespace Chip8Emulator
                     break;
 
                 case 0x3:
+                    if (registers[X] == NN)
+                    {
+                        PC += 2;
+                    }
                     break;
 
                 case 0x4:
+                    if (registers[X] != NN)
+                    {
+                        PC += 2;
+                    }
                     break;
 
                 case 0x5:
+                    if (registers[X] == registers[Y])
+                    {
+                        PC += 2;
+                    }
                     break;
 
                 case 0x6:
@@ -99,36 +111,48 @@ namespace Chip8Emulator
                             break;
                         case 0x5:
                             if (registers[X] >= registers[Y])
-                                {
-                                    registers[15] = 1;
-                                }
+                            {
+                                registers[15] = 1;
+                            }
 
                             else
-                                {
-                                    registers[15] = 0;
-                                }
-                             registers[X] = (byte) (registers[X] - registers[Y]);
+                            {
+                                registers[15] = 0;
+                            }
+                            registers[X] = (byte) (registers[X] - registers[Y]);
                             break;
                         case 0x6:
+                            registers[X] = registers[Y];
+                            int shiftedOutRight = registers[X] & 1; // 1 or 0
+                            registers[X] = (byte) (registers[X] >> 1);
+                            registers[15] = (byte) shiftedOutRight;
                             break;
                         case 0x7:
                             if (registers[Y] >= registers[X])
-                                {
-                                    registers[15] = 1;
-                                }
+                            {
+                                registers[15] = 1;
+                            }
 
                             else
-                                {
-                                    registers[15] = 0;
-                                }
-                             registers[X] = (byte) (registers[Y] - registers[X]);
+                            {
+                                registers[15] = 0;
+                            }
+                            registers[X] = (byte) (registers[Y] - registers[X]);
                             break;
                         case 0xE:
+                            registers[X] = registers[Y];
+                            int shiftedOutLeft = (registers[X] >> 7) & 1; // 1 or 0
+                            registers[X] = (byte) (registers[X] << 1);
+                            registers[15] = (byte) shiftedOutLeft;
                             break;
                     }
                     break;
 
                 case 0x9:
+                    if (registers[X] != registers[Y])
+                    {
+                        PC += 2;
+                    }
                     break;
 
                 case 0xA:
@@ -142,7 +166,37 @@ namespace Chip8Emulator
                     break;
 
                 case 0xD:
+                    int yCoordinate = registers[Y] & 31;
+                    registers[15] = 0;
 
+                    for(int i = 0; i < N; i++) {
+                        if (yCoordinate >= 32)
+                        {
+                            break;
+                        }
+                        byte sprite = memory.buffer[I + i];
+                        int xCoordinate = registers[X] & 63;
+                        
+                        for (int j = 0; j < 8; j++){
+                            if(xCoordinate >= 64)
+                            {
+                                break;
+                            }
+                            int shiftedOut = (sprite >> (7 - j)) & 1;
+
+                            if (shiftedOut == 1 && display.display[yCoordinate, xCoordinate] == true)
+                            {
+                                display.display[yCoordinate, xCoordinate] = false;
+                                registers[15] = 1;
+                            }
+                            else if (shiftedOut == 1 && display.display[yCoordinate, xCoordinate] == false)
+                            {
+                                display.display[yCoordinate, xCoordinate] = true;
+                            }
+                            xCoordinate += 1;
+                        }
+                        yCoordinate += 1;
+                    }
                     break;
 
                 case 0xE:
