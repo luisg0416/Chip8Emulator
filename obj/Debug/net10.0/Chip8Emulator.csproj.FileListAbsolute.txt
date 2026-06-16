@@ -1,0 +1,16 @@
+C:\Users\Luis\Chip8Emulator\obj\Debug\net10.0\Chip8Emulator.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Luis\Chip8Emulator\obj\Debug\net10.0\Chip8Emulator.AssemblyInfoInputs.cache
+C:\Users\Luis\Chip8Emulator\obj\Debug\net10.0\Chip8Emulator.AssemblyInfo.cs
+C:\Users\Luis\Chip8Emulator\obj\Debug\net10.0\Chip8Emulator.csproj.CoreCompileInputs.cache
+C:\Users\Luis\Chip8Emulator\obj\Debug\net10.0\Chip8Emulator.sourcelink.json
+C:\Users\Luis\Chip8Emulator\bin\Debug\net10.0\Chip8Emulator.exe
+C:\Users\Luis\Chip8Emulator\bin\Debug\net10.0\SDL2.dll
+C:\Users\Luis\Chip8Emulator\bin\Debug\net10.0\Chip8Emulator.deps.json
+C:\Users\Luis\Chip8Emulator\bin\Debug\net10.0\Chip8Emulator.runtimeconfig.json
+C:\Users\Luis\Chip8Emulator\bin\Debug\net10.0\Chip8Emulator.dll
+C:\Users\Luis\Chip8Emulator\bin\Debug\net10.0\Chip8Emulator.pdb
+C:\Users\Luis\Chip8Emulator\obj\Debug\net10.0\Chip8Emulator.dll
+C:\Users\Luis\Chip8Emulator\obj\Debug\net10.0\refint\Chip8Emulator.dll
+C:\Users\Luis\Chip8Emulator\obj\Debug\net10.0\Chip8Emulator.pdb
+C:\Users\Luis\Chip8Emulator\obj\Debug\net10.0\Chip8Emulator.genruntimeconfig.cache
+C:\Users\Luis\Chip8Emulator\obj\Debug\net10.0\ref\Chip8Emulator.dll
