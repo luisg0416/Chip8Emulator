@@ -10,11 +10,13 @@ namespace Chip8Emulator
         public byte soundTimer = 0;
         Memory memory;
         Display display;
+        Keyboard keyboard;
 
-        public CPU(Memory memory, Display display)
+        public CPU(Memory memory, Display display, Keyboard keyboard)
         {
             this.memory = memory;
             this.display = display;
+            this.keyboard = keyboard;
         }
 
         public void Cycle()
@@ -52,6 +54,10 @@ namespace Chip8Emulator
                             Array.Clear(display.display, 0, display.display.Length);
                             break;
 
+                        case 0xE:
+                            PC = s.Pop();
+                            break;
+
                     }
                     break;
 
@@ -60,6 +66,8 @@ namespace Chip8Emulator
                     break;
 
                 case 0x2:
+                    s.Push(PC);
+                    PC = NNN;
                     break;
 
                 case 0x3:
@@ -200,6 +208,14 @@ namespace Chip8Emulator
                     break;
 
                 case 0xE:
+                    switch (N)
+                    {
+                        case 0x1:
+                        break;
+
+                        case 0xE:
+                        break;
+                    }
                     break;
 
                 case 0xF:

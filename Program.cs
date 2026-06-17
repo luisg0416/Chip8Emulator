@@ -18,7 +18,8 @@ IntPtr renderer = SDL_CreateRenderer(window, -1, SDL_RendererFlags.SDL_RENDERER_
 
 Memory memory = new Memory("C:\\Users\\Luis\\Chip8Emulator\\IBM Logo.ch8");
 Display display = new Display();
-CPU cpu = new CPU(memory, display);
+Keyboard keyboard = new Keyboard();
+CPU cpu = new CPU(memory, display, keyboard);
 
 bool running = true;
 Stopwatch stopwatch = new Stopwatch();
