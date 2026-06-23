@@ -211,14 +211,31 @@ namespace Chip8Emulator
                     switch (N)
                     {
                         case 0x1:
+                            if (!keyboard.keys[registers[X]])
+                            {
+                                PC += 2;
+                            }
                         break;
 
                         case 0xE:
+                            if (keyboard.keys[registers[X]])
+                            {
+                                PC += 2;
+                            }
                         break;
                     }
                     break;
 
                 case 0xF:
+                    if (keyboard.lastReleasedKey == 255)
+                    {
+                        PC -= 2;
+                    } 
+                    else
+                    {
+                        registers[X] = keyboard.lastReleasedKey;
+                        keyboard.lastReleasedKey = 255;
+                    }
                     break;
 
 

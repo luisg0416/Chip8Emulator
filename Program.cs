@@ -31,6 +31,17 @@ while (running) {
         if (e.type == SDL_EventType.SDL_QUIT) {
             running = false;
         }
+        if (e.type == SDL_EventType.SDL_KEYDOWN)
+        {
+            if (e.key.repeat == 0)
+            {
+                keyboard.keyHeld(e.key.keysym.scancode);
+            }
+        }
+        if(e.type == SDL_EventType.SDL_KEYUP)
+        {
+            keyboard.keyReleased(e.key.keysym.scancode);
+        }
     }
 
     for (int i = 0; i < 11; i++) {

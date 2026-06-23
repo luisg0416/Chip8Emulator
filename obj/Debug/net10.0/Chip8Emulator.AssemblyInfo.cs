@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Chip8Emulator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5ae82701e91462d3c11ca43fc60252bba494b65a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a276bb6f29dac407495debd6a605ca17ee6058ee")]
 [assembly: System.Reflection.AssemblyProductAttribute("Chip8Emulator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Chip8Emulator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
