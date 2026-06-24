@@ -11,6 +11,7 @@ namespace Chip8Emulator
         Memory memory;
         Display display;
         Keyboard keyboard;
+        Random random = new Random();
 
         public CPU(Memory memory, Display display, Keyboard keyboard)
         {
@@ -115,7 +116,17 @@ namespace Chip8Emulator
                             registers[X] = (byte) (registers[X] ^ registers[Y]);
                             break;
                         case 0x4:
-                            registers[X] = (byte) (registers[X] + registers[Y]);
+                            int sum = registers[X] + registers[Y];
+
+                            if (sum > 255)
+                            {
+                                registers[15] = 1;
+                            }
+                            else
+                            {
+                                registers[15] = 0;
+                            }
+                            registers[X] = (byte) sum;
                             break;
                         case 0x5:
                             if (registers[X] >= registers[Y])
@@ -168,9 +179,12 @@ namespace Chip8Emulator
                     break;
 
                 case 0xB:
+                    PC = (ushort)(NNN + registers[0]);
                     break;
 
                 case 0xC:
+                    int val = random.Next(0, 256);
+                    registers[X] = (byte)(val & NN);
                     break;
 
                 case 0xD:
@@ -178,32 +192,24 @@ namespace Chip8Emulator
                     registers[15] = 0;
 
                     for(int i = 0; i < N; i++) {
-                        if (yCoordinate >= 32)
-                        {
-                            break;
-                        }
                         byte sprite = memory.buffer[I + i];
                         int xCoordinate = registers[X] & 63;
                         
                         for (int j = 0; j < 8; j++){
-                            if(xCoordinate >= 64)
-                            {
-                                break;
-                            }
                             int shiftedOut = (sprite >> (7 - j)) & 1;
 
-                            if (shiftedOut == 1 && display.display[yCoordinate, xCoordinate] == true)
-                            {
-                                display.display[yCoordinate, xCoordinate] = false;
-                                registers[15] = 1;
+                            if (shiftedOut == 1) {
+                                int wrappedX = xCoordinate % 64;
+                                int wrappedY = yCoordinate % 32;
+
+                                if (display.display[wrappedY, wrappedX]) {
+                                    registers[15] = 1;
+                                }
+                                display.display[wrappedY, wrappedX] ^= true;
                             }
-                            else if (shiftedOut == 1 && display.display[yCoordinate, xCoordinate] == false)
-                            {
-                                display.display[yCoordinate, xCoordinate] = true;
-                            }
-                            xCoordinate += 1;
+                            xCoordinate++;
                         }
-                        yCoordinate += 1;
+                        yCoordinate++;
                     }
                     break;
 
@@ -227,14 +233,64 @@ namespace Chip8Emulator
                     break;
 
                 case 0xF:
-                    if (keyboard.lastReleasedKey == 255)
+                    switch (NN)
                     {
-                        PC -= 2;
-                    } 
-                    else
-                    {
-                        registers[X] = keyboard.lastReleasedKey;
-                        keyboard.lastReleasedKey = 255;
+                        case 0x07:
+                        registers[X] = delayTimer;
+                        break;
+
+                        case 0x0A:
+                            if (keyboard.lastReleasedKey == 255)
+                            {
+                                PC -= 2;
+                            } 
+                            else
+                            {
+                                registers[X] = keyboard.lastReleasedKey;
+                                keyboard.lastReleasedKey = 255;
+                            }
+                        break;
+
+                        case 0x15:
+                            delayTimer = registers[X];
+                            break;
+
+                        case 0x18:
+                            soundTimer = registers[X];
+                            break;
+
+                        case 0x1E:
+                            I += registers[X];
+                            break;
+
+                        case 0x29:
+                            I = (ushort) ((registers[X] * 5) + 0x50);
+                            break;
+
+                        case 0x33:
+                            int num = registers[X];
+                            for (int i = 0; i < 3; i++)
+                                {
+                                    int divisor = (int)Math.Pow(10, 2 - i);
+                                    int digit = (num / divisor) % 10;
+                                    memory.buffer[I + i] = (byte) digit;
+                                }
+                            break;
+
+                        case 0x55:
+                            for (int i = 0; i <= X; i++)
+                            {
+                                memory.buffer[I + i] = registers[i];
+                            }
+                            break;
+
+                        case 0x65:
+                            for (int i = 0; i <= X; i++)
+                            {
+                                registers[i] = memory.buffer[I + i];
+                            }
+                            break;
+
                     }
                     break;
 

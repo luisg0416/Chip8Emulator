@@ -16,7 +16,7 @@ IntPtr window = SDL_CreateWindow(
 
 IntPtr renderer = SDL_CreateRenderer(window, -1, SDL_RendererFlags.SDL_RENDERER_ACCELERATED);
 
-Memory memory = new Memory("C:\\Users\\Luis\\Chip8Emulator\\IBM Logo.ch8");
+Memory memory = new Memory("C:\\Users\\Luis\\Chip8Emulator\\snek.ch8");
 Display display = new Display();
 Keyboard keyboard = new Keyboard();
 CPU cpu = new CPU(memory, display, keyboard);
